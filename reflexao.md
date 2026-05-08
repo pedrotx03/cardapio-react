@@ -14,3 +14,14 @@ R: Apenas em **um lugar**! Eu só preciso abrir o arquivo `ItemCardapio.jsx` e a
 
 **5. Como os dados (nome, preço) chegaram dentro do componente?**
 R: Eles chegaram através de **Props** (propriedades). No `App.jsx`, nós "injetamos" os dados no componente como se fossem atributos de uma tag HTML (ex: `nome="X-Bacon Completo" preco={25.50}`). O componente `ItemCardapio`, por sua vez, foi preparado para receber essas *props* como parâmetros na sua função `({ nome, preco })` e usá-las para exibir as informações corretas de cada lanche.
+
+### Passo 3: Interatividade e Estado (State)
+
+**6. Por que uma variável comum (let total = 0) não atualiza a tela?**
+R: Porque o React não "monitora" variáveis comuns. Para a tela mudar, o componente precisa sofrer uma "renderização" (ser redesenhado). O `useState` é uma ferramenta especial que faz duas coisas: guarda o valor e, toda vez que esse valor é alterado pela função de atualização (setTotal), ele avisa ao React: "Ei, os dados mudaram! Desenhe a interface novamente com o novo valor".
+
+**7. Onde foi necessário guardar o número total - no App.jsx ou no ItemCardapio.jsx? Por quê?**
+R: No **App.jsx**. Isso é um conceito chamado "Elevação de Estado" (State Lifting). Como o componente que mostra o total (o título no topo) e os componentes que possuem os botões (os itens) estão em lugares diferentes, precisamos guardar a informação no "pai" em comum (App.jsx). Se guardássemos dentro de cada `ItemCardapio`, cada lanche teria seu próprio contador individual e não conseguiríamos somar todos em um total geral no topo da página.
+
+**8. Como o botão (filho) consegue avisar o App (pai) que houve um clique?**
+R: Através de uma **Função de Callback** passada via Props. O pai (`App.jsx`) criou uma função para somar e a entregou para o filho (`ItemCardapio`) através de uma propriedade (no nosso caso, chamada `onAdicionar`). Quando o usuário clica no botão dentro do filho, o filho executa essa função que recebeu. Como a função "nasceu" no pai, ela consegue alterar o estado que está lá no pai.
